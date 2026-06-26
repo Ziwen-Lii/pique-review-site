@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
+import pmExercisesMarkdown from "./content/pm-exercises.md?raw";
 import pmLecture01Markdown from "./content/pm-lecture-01.md?raw";
 import pmLecture02Markdown from "./content/pm-lecture-02.md?raw";
 import pmLecture03Markdown from "./content/pm-lecture-03.md?raw";
@@ -30,12 +31,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v3";
-const ACTIVE_KEY = "review-site-active-chapter-v3";
-const EXPANDED_KEY = "review-site-expanded-courses-v3";
+const STORAGE_KEY = "review-site-courses-v4";
+const ACTIVE_KEY = "review-site-active-chapter-v4";
+const EXPANDED_KEY = "review-site-expanded-courses-v4";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-l01";
+const DEFAULT_CHAPTER_ID = "pm-exercises";
 
 const starterCourses = [
   {
@@ -259,6 +260,11 @@ const starterCourses = [
     id: "course-pm",
     title: "软件项目管理",
     chapters: [
+      {
+        id: "pm-exercises",
+        title: "课后题与样题：过程与答案",
+        markdown: pmExercisesMarkdown,
+      },
       {
         id: "pm-drawing",
         title: "画图大章：高频图表专项",
