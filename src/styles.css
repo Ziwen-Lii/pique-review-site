@@ -808,7 +808,18 @@ a:focus-visible {
   text-decoration: none;
 }
 
-.markdown-body a:hover {
+.chapter-inline-link {
+  display: inline;
+  padding: 0;
+  color: var(--accent);
+  background: transparent;
+  font: inherit;
+  font-weight: 760;
+  text-align: left;
+}
+
+.markdown-body a:hover,
+.chapter-inline-link:hover {
   text-decoration: underline;
 }
 

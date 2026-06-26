@@ -18,13 +18,24 @@ import {
   X,
 } from "lucide-react";
 import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
+import pmLecture01Markdown from "./content/pm-lecture-01.md?raw";
+import pmLecture02Markdown from "./content/pm-lecture-02.md?raw";
+import pmLecture03Markdown from "./content/pm-lecture-03.md?raw";
+import pmLecture04Markdown from "./content/pm-lecture-04.md?raw";
+import pmLecture05Markdown from "./content/pm-lecture-05.md?raw";
+import pmLecture06Markdown from "./content/pm-lecture-06.md?raw";
+import pmLecture07Markdown from "./content/pm-lecture-07.md?raw";
+import pmLecture08Markdown from "./content/pm-lecture-08.md?raw";
+import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
+import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
+import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v2";
-const ACTIVE_KEY = "review-site-active-chapter-v2";
-const EXPANDED_KEY = "review-site-expanded-courses-v2";
+const STORAGE_KEY = "review-site-courses-v3";
+const ACTIVE_KEY = "review-site-active-chapter-v3";
+const EXPANDED_KEY = "review-site-expanded-courses-v3";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-drawing";
+const DEFAULT_CHAPTER_ID = "pm-l01";
 
 const starterCourses = [
   {
@@ -254,37 +265,59 @@ const starterCourses = [
         markdown: pmDrawingMarkdown,
       },
       {
-        id: "pm-01",
-        title: "第一章：项目范围与 WBS",
-        markdown: `# 第一章：项目范围与 WBS
-
-## 复习重点
-
-- 范围管理解决“做什么”和“不做什么”。
-- WBS 是面向交付物的分解，不是简单任务清单。
-- 范围蔓延通常来自需求变更失控。
-
-## 答题关键词
-
-- 范围说明书
-- 验收标准
-- 工作包
-- 变更控制`,
+        id: "pm-l01",
+        title: "Lecture 1：项目与项目管理",
+        markdown: pmLecture01Markdown,
       },
       {
-        id: "pm-02",
-        title: "第二章：进度、成本与风险",
-        markdown: `# 第二章：进度、成本与风险
-
-## 三条主线
-
-1. 进度管理：活动定义、排序、估算、计划、控制。
-2. 成本管理：估算、预算、成本控制。
-3. 风险管理：识别、分析、应对、监控。
-
-## 速记
-
-> 进度看路径，成本看基准，风险看概率和影响。`,
+        id: "pm-l02",
+        title: "Lecture 2：整合管理、项目选择与启动",
+        markdown: pmLecture02Markdown,
+      },
+      {
+        id: "pm-l03",
+        title: "Lecture 3：范围管理",
+        markdown: pmLecture03Markdown,
+      },
+      {
+        id: "pm-l04",
+        title: "Lecture 4：进度管理 Part 1",
+        markdown: pmLecture04Markdown,
+      },
+      {
+        id: "pm-l05",
+        title: "Lecture 5：进度管理 Part 2",
+        markdown: pmLecture05Markdown,
+      },
+      {
+        id: "pm-l06",
+        title: "Lecture 6：成本管理",
+        markdown: pmLecture06Markdown,
+      },
+      {
+        id: "pm-l07",
+        title: "Lecture 7：风险管理",
+        markdown: pmLecture07Markdown,
+      },
+      {
+        id: "pm-l08",
+        title: "Lecture 8：HR、干系人与沟通管理",
+        markdown: pmLecture08Markdown,
+      },
+      {
+        id: "pm-l09",
+        title: "Lecture 9：采购与质量管理",
+        markdown: pmLecture09Markdown,
+      },
+      {
+        id: "pm-l10",
+        title: "Lecture 10：Agile 与博弈视角",
+        markdown: pmLecture10Markdown,
+      },
+      {
+        id: "pm-l11",
+        title: "Lecture 11：执行、收尾与全课程复习",
+        markdown: pmLecture11Markdown,
       },
     ],
   },
@@ -411,7 +444,7 @@ function splitTableRow(line) {
     .map((cell) => cell.trim());
 }
 
-function renderInline(text) {
+function renderInline(text, onChapterLink) {
   const parts = [];
   const pattern = /(==[^=]+==|\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
   let lastIndex = 0;
@@ -435,6 +468,20 @@ function renderInline(text) {
       parts.push(<code key={`${token}-${match.index}`}>{token.slice(1, -1)}</code>);
     } else {
       const link = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link[2].startsWith("chapter:")) {
+        parts.push(
+          <button
+            className="chapter-inline-link"
+            key={`${token}-${match.index}`}
+            onClick={() => onChapterLink?.(link[2].replace("chapter:", ""))}
+            type="button"
+          >
+            {link[1]}
+          </button>,
+        );
+        lastIndex = pattern.lastIndex;
+        continue;
+      }
       parts.push(
         <a key={`${token}-${match.index}`} href={link[2]} target="_blank" rel="noreferrer">
           {link[1]}
@@ -529,7 +576,7 @@ function MermaidDiagram({ chart, theme }) {
   return <div className="diagram-panel" ref={containerRef} />;
 }
 
-function renderMarkdown(markdown, theme) {
+function renderMarkdown(markdown, theme, onChapterLink) {
   const lines = markdown.split("\n");
   const blocks = [];
   let index = 0;
@@ -567,7 +614,7 @@ function renderMarkdown(markdown, theme) {
     const heading = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (heading) {
       const level = heading[1].length;
-      const content = renderInline(heading[2]);
+      const content = renderInline(heading[2], onChapterLink);
       const Tag = `h${level}`;
       blocks.push(
         <Tag id={getHeadingId(heading[2], index)} key={`heading-${index}`}>
@@ -586,7 +633,7 @@ function renderMarkdown(markdown, theme) {
       }
       blocks.push(
         <blockquote key={`quote-${index}`}>
-          <p>{renderInline(quoteLines.join(" "))}</p>
+          <p>{renderInline(quoteLines.join(" "), onChapterLink)}</p>
         </blockquote>,
       );
       continue;
@@ -608,7 +655,7 @@ function renderMarkdown(markdown, theme) {
             <thead>
               <tr>
                 {headers.map((header, headerIndex) => (
-                  <th key={`${header}-${headerIndex}`}>{renderInline(header)}</th>
+                  <th key={`${header}-${headerIndex}`}>{renderInline(header, onChapterLink)}</th>
                 ))}
               </tr>
             </thead>
@@ -616,7 +663,7 @@ function renderMarkdown(markdown, theme) {
               {rows.map((row, rowIndex) => (
                 <tr key={`row-${rowIndex}`}>
                   {headers.map((_, cellIndex) => (
-                    <td key={`cell-${rowIndex}-${cellIndex}`}>{renderInline(row[cellIndex] ?? "")}</td>
+                    <td key={`cell-${rowIndex}-${cellIndex}`}>{renderInline(row[cellIndex] ?? "", onChapterLink)}</td>
                   ))}
                 </tr>
               ))}
@@ -636,7 +683,7 @@ function renderMarkdown(markdown, theme) {
       blocks.push(
         <ul key={`ul-${index}`}>
           {items.map((item, itemIndex) => (
-            <li key={`${item}-${itemIndex}`}>{renderInline(item)}</li>
+            <li key={`${item}-${itemIndex}`}>{renderInline(item, onChapterLink)}</li>
           ))}
         </ul>,
       );
@@ -652,7 +699,7 @@ function renderMarkdown(markdown, theme) {
       blocks.push(
         <ol key={`ol-${index}`}>
           {items.map((item, itemIndex) => (
-            <li key={`${item}-${itemIndex}`}>{renderInline(item)}</li>
+            <li key={`${item}-${itemIndex}`}>{renderInline(item, onChapterLink)}</li>
           ))}
         </ol>,
       );
@@ -665,7 +712,7 @@ function renderMarkdown(markdown, theme) {
       paragraph.push(lines[index].trim());
       index += 1;
     }
-    blocks.push(<p key={`p-${index}`}>{renderInline(paragraph.join(" "))}</p>);
+    blocks.push(<p key={`p-${index}`}>{renderInline(paragraph.join(" "), onChapterLink)}</p>);
   }
 
   return blocks;
@@ -1195,7 +1242,12 @@ export function App() {
                 </section>
               ) : (
                 <section className="reader-panel" aria-label="章节内容">
-                  <div className="markdown-body">{renderMarkdown(visibleMarkdown, theme)}</div>
+                  <div className="markdown-body">
+                    {renderMarkdown(visibleMarkdown, theme, (chapterId) => {
+                      setActiveChapterId(chapterId);
+                      setMode("preview");
+                    })}
+                  </div>
                 </section>
               )}
             </article>
