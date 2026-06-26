@@ -17,12 +17,14 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v1";
-const ACTIVE_KEY = "review-site-active-chapter-v1";
-const EXPANDED_KEY = "review-site-expanded-courses-v1";
+const STORAGE_KEY = "review-site-courses-v2";
+const ACTIVE_KEY = "review-site-active-chapter-v2";
+const EXPANDED_KEY = "review-site-expanded-courses-v2";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
+const DEFAULT_CHAPTER_ID = "pm-drawing";
 
 const starterCourses = [
   {
@@ -247,6 +249,11 @@ const starterCourses = [
     title: "软件项目管理",
     chapters: [
       {
+        id: "pm-drawing",
+        title: "画图大章：高频图表专项",
+        markdown: pmDrawingMarkdown,
+      },
+      {
         id: "pm-01",
         title: "第一章：项目范围与 WBS",
         markdown: `# 第一章：项目范围与 WBS
@@ -309,6 +316,10 @@ function findChapter(courses, chapterId) {
 
 function getFirstChapterId(courses) {
   return courses.find((course) => course.chapters.length)?.chapters[0]?.id ?? "";
+}
+
+function getDefaultChapterId(courses) {
+  return findChapter(courses, DEFAULT_CHAPTER_ID) ? DEFAULT_CHAPTER_ID : getFirstChapterId(courses);
 }
 
 function templateFor(title, courseTitle) {
@@ -801,7 +812,7 @@ export function App() {
   const contentRef = useRef(null);
   const searchRef = useRef(null);
   const [activeChapterId, setActiveChapterId] = useState(() => {
-    return localStorage.getItem(ACTIVE_KEY) || getFirstChapterId(courses);
+    return localStorage.getItem(ACTIVE_KEY) || getDefaultChapterId(courses);
   });
   const [expanded, setExpanded] = useState(() => {
     const saved = readJson(EXPANDED_KEY, null);
@@ -821,7 +832,7 @@ export function App() {
 
   useEffect(() => {
     if (!active && courses.length) {
-      setActiveChapterId(getFirstChapterId(courses));
+      setActiveChapterId(getDefaultChapterId(courses));
     }
   }, [active, courses]);
 
