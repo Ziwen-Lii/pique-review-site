@@ -413,7 +413,7 @@ function splitTableRow(line) {
 
 function renderInline(text) {
   const parts = [];
-  const pattern = /(\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
+  const pattern = /(==[^=]+==|\*\*[^*]+\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
   let lastIndex = 0;
   let match;
 
@@ -423,7 +423,13 @@ function renderInline(text) {
     }
 
     const token = match[0];
-    if (token.startsWith("**")) {
+    if (token.startsWith("==")) {
+      parts.push(
+        <span className="term-highlight" key={`${token}-${match.index}`}>
+          {token.slice(2, -2)}
+        </span>,
+      );
+    } else if (token.startsWith("**")) {
       parts.push(<strong key={`${token}-${match.index}`}>{token.slice(2, -2)}</strong>);
     } else if (token.startsWith("`")) {
       parts.push(<code key={`${token}-${match.index}`}>{token.slice(1, -1)}</code>);
@@ -469,7 +475,61 @@ function stripLeadingH1(markdown) {
   return markdown;
 }
 
-function renderMarkdown(markdown) {
+function MermaidDiagram({ chart, theme }) {
+  const containerRef = useRef(null);
+  const idRef = useRef(`mermaid-${Math.random().toString(36).slice(2)}`);
+
+  useEffect(() => {
+    let active = true;
+
+    import("mermaid")
+      .then(({ default: mermaid }) => {
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "strict",
+          theme: theme === "dark" ? "dark" : "base",
+          themeVariables:
+            theme === "dark"
+              ? {
+                  primaryColor: "#26213b",
+                  primaryTextColor: "#f6f6f7",
+                  primaryBorderColor: "#6f55d9",
+                  lineColor: "#8f7ef2",
+                  secondaryColor: "#191b1f",
+                  tertiaryColor: "#101113",
+                }
+              : {
+                  primaryColor: "#f6f3ff",
+                  primaryTextColor: "#202326",
+                  primaryBorderColor: "#b8abf4",
+                  lineColor: "#6f55d9",
+                  secondaryColor: "#ffffff",
+                  tertiaryColor: "#f7f7f8",
+                },
+        });
+
+        return mermaid.render(idRef.current, chart);
+      })
+      .then(({ svg }) => {
+        if (active && containerRef.current) {
+          containerRef.current.innerHTML = svg;
+        }
+      })
+      .catch((error) => {
+        if (active && containerRef.current) {
+          containerRef.current.textContent = `Diagram render failed: ${error.message}`;
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [chart, theme]);
+
+  return <div className="diagram-panel" ref={containerRef} />;
+}
+
+function renderMarkdown(markdown, theme) {
   const lines = markdown.split("\n");
   const blocks = [];
   let index = 0;
@@ -484,6 +544,7 @@ function renderMarkdown(markdown) {
     }
 
     if (trimmed.startsWith("```")) {
+      const language = trimmed.slice(3).trim().toLowerCase();
       const codeLines = [];
       index += 1;
       while (index < lines.length && !lines[index].trim().startsWith("```")) {
@@ -491,6 +552,10 @@ function renderMarkdown(markdown) {
         index += 1;
       }
       index += 1;
+      if (language === "mermaid" || language === "uml") {
+        blocks.push(<MermaidDiagram chart={codeLines.join("\n")} key={`diagram-${index}`} theme={theme} />);
+        continue;
+      }
       blocks.push(
         <pre key={`code-${index}`}>
           <code>{codeLines.join("\n")}</code>
@@ -1130,7 +1195,7 @@ export function App() {
                 </section>
               ) : (
                 <section className="reader-panel" aria-label="章节内容">
-                  <div className="markdown-body">{renderMarkdown(visibleMarkdown)}</div>
+                  <div className="markdown-body">{renderMarkdown(visibleMarkdown, theme)}</div>
                 </section>
               )}
             </article>
