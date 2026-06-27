@@ -1,5 +1,17 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-27T09:41:09Z",
-  "courses": []
+  "updatedAt": "2026-06-27T10:02:30.565Z",
+  "courses": [
+    {
+      "id": "course-test",
+      "title": "软件测试",
+      "chapters": [
+        {
+          "id": "chapter-sync-smoke-1782554549",
+          "title": "同步测试临时章节",
+          "markdown": "# 同步测试临时章节\n\n用于验证 Vercel API 写入，随后删除。"
+        }
+      ]
+    }
+  ]
 }
