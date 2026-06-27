@@ -1,10 +1,10 @@
 # 课后题与样题：过程与答案
 
-这一章专门整理 Lecture 1-11 PDF 里的 ==Activity==、==Sample Questions==、计算题和案例题。
-This chapter collects ==Activities==, ==Sample Questions==, calculation questions, and case questions from Lecture 1-11 PDFs.
+这一章专门整理 Lecture 1-11 PDF 里的 ==Activity==、==Sample Questions==、课后选择题、计算题和案例题。
+This chapter collects ==Activities==, ==Sample Questions==, after-class multiple-choice questions, calculation questions, and case questions from Lecture 1-11 PDFs.
 
-每题都给出题目、过程和答案。课堂讨论题没有唯一标准答案，本章给的是考试复习用参考答案。
-Each question includes the prompt, process, and answer. Discussion activities do not have one single official answer; this chapter gives revision-oriented model answers.
+每题都给出题目、过程和答案；选择题保留 A/B/C/D 选项并给出解析。课堂讨论题没有唯一标准答案，本章给的是考试复习用参考答案。
+Each question includes the prompt, process, and answer; multiple-choice questions keep A/B/C/D options with explanations. Discussion activities do not have one single official answer; this chapter gives revision-oriented model answers.
 
 ## Lecture 1：项目与项目管理
 
@@ -343,14 +343,122 @@ A has no predecessor; B starts after A; C can start 2 days before B finishes; D 
 
 ### L4-Q5 Week 1 选择题
 
-| 题目 | 答案 | 解释 |
-| --- | --- | --- |
-| Project initiation group 的结果是什么？ | b. Project Charter | 启动过程组输出项目章程 |
-| WBS 可以按什么分解？ | b. By project phase or deliverable | WBS 可按阶段或交付物分解 |
-| Project charter 的主要目的？ | a. It authorizes the project manager | 章程正式授权项目经理 |
-| 多数项目管理软件使用什么方法建网络图？ | c. Precedence Diagramming | PDM 是常用网络图方法 |
-| 团队争论 milestones 和 risks，什么本应帮助避免？ | d. A work breakdown structure | WBS 澄清工作范围，减少混乱 |
-| 展示项目 schedule status 给延迟交付负责人，最好用什么？ | a. Gantt Chart | 甘特图直观展示时间状态 |
+这些题来自 Lecture 4 PDF 末尾的 ==Sample Questions for Contents in Week 1==。
+These questions come from ==Sample Questions for Contents in Week 1== at the end of Lecture 4 PDF.
+
+#### L4-Q5-1：Project initiation group 的结果
+
+题目：Project initiation group 的结果是什么？
+Question: What document is the result of the project initiation group?
+
+选项：
+Options:
+
+- A. Statement of Work
+- B. Project Charter
+- C. Scope Plan Document
+- D. Preliminary Scope Document
+
+答案：==B. Project Charter==。
+Answer: ==B. Project Charter==.
+
+解释：Initiating Process Group 的关键输出是 Project Charter，它正式承认项目并授权项目经理。
+Explanation: A key output of the Initiating Process Group is the Project Charter, which formally recognises the project and authorises the project manager.
+
+#### L4-Q5-2：WBS 的分解方式
+
+题目：WBS 可以按什么有效地分解工作？
+Question: Which of the following is a valid way to break down the work in a WBS?
+
+选项：
+Options:
+
+- A. By quality metric
+- B. By project phase or deliverable
+- C. By risk metric
+- D. By unit of work
+
+答案：==B. By project phase or deliverable==。
+Answer: ==B. By project phase or deliverable==.
+
+解释：WBS 是面向交付物的层级分解，也可以按项目阶段组织；不是按质量指标或风险指标分解。
+Explanation: A WBS is deliverable-oriented and may also be organised by project phase; it is not primarily broken down by quality or risk metrics.
+
+#### L4-Q5-3：Project Charter 的主要目的
+
+题目：以下哪一项最能描述 Project Charter 的主要目的？
+Question: Which of the following best describes the main purpose of the Project Charter?
+
+选项：
+Options:
+
+- A. It authorizes the project manager to work on the project
+- B. It describes the scope of the work
+- C. It contains a list of all activities to be performed
+- D. It identifies the sponsor and describes his or her role on the project
+
+答案：==A. It authorizes the project manager to work on the project==。
+Answer: ==A. It authorizes the project manager to work on the project==.
+
+解释：Project Charter 的核心作用是正式启动项目并授权 PM；范围细节、活动清单分别属于后续范围/进度规划。
+Explanation: The core purpose of the Project Charter is to formally start the project and authorise the PM; detailed scope and activity lists belong to later scope/schedule planning.
+
+#### L4-Q5-4：项目管理软件常用的网络图方法
+
+题目：多数项目管理软件应用使用哪种方法建立项目进度网络图？
+Question: The majority of project management software applications use the ______ method to build the project schedule network diagram.
+
+选项：
+Options:
+
+- A. Leads and Lags
+- B. Critical Diagramming
+- C. Precedence Diagramming
+- D. Activity-on-Arrows Diagramming
+
+答案：==C. Precedence Diagramming==。
+Answer: ==C. Precedence Diagramming==.
+
+解释：PDM / Precedence Diagramming Method 是常用的进度网络图方法，活动在节点上，箭头表示依赖。
+Explanation: PDM is the common schedule network method; activities are shown on nodes and arrows represent dependencies.
+
+#### L4-Q5-5：Milestones 和 risks 争论
+
+题目：项目执行中团队持续争论 milestones 和相关 risks，导致项目可能落后。若之前正确创建了什么，最可能避免这种冲突？
+Question: The project is in execution, but the team keeps arguing about milestones and specific risks, putting the schedule at risk. What would likely have helped avoid this conflict had it been properly created first?
+
+选项：
+Options:
+
+- A. A project charter
+- B. Physical resource assignments
+- C. Quality metrics
+- D. A work breakdown structure
+
+答案：==D. A work breakdown structure==。
+Answer: ==D. A work breakdown structure==.
+
+解释：WBS 澄清工作范围、交付物和工作包，是后续活动、里程碑和风险识别的重要基础。
+Explanation: The WBS clarifies scope, deliverables, and work packages, forming a basis for activities, milestones, and risk identification.
+
+#### L4-Q5-6：展示 schedule status 的工具
+
+题目：项目几个 deliverables 轻微延迟，你要和负责人开会说明项目进度状态。最适合用哪个工具？
+Question: A project has minor delays in several deliverables. You meet the responsible team members. Which tool is best to show project schedule status?
+
+选项：
+Options:
+
+- A. Gantt Chart
+- B. Project Network Diagram
+- C. Milestone Chart
+- D. Responsibility Assignment Matrix
+
+答案：==A. Gantt Chart==。
+Answer: ==A. Gantt Chart==.
+
+解释：Gantt Chart 最直观地展示任务、时间轴、进度和延迟状态；Network Diagram 更偏依赖和关键路径分析。
+Explanation: A Gantt Chart most clearly shows tasks, timeline, progress, and delays; a Network Diagram is more technical for dependency and critical-path analysis.
 
 ## Lecture 5：进度管理 Part 2
 
@@ -440,7 +548,59 @@ The project is ==over budget== and ==behind schedule==. CPI < 1 means poor cost 
 
 ## Lecture 7：风险管理
 
-### L7-Q1 Decision Tree / EMV
+### L7-Q1 Risk Utility 选择活动：Game Show
+
+题目：你在电视游戏节目中可以选择以下一个选项，你会选哪个？这个题不是为了唯一正确答案，而是用来判断 ==risk utility / risk tolerance==。
+Question: You are on a TV game show and can choose one of the following. Which would you take? This question does not have one single correct answer; it is used to discuss ==risk utility / risk tolerance==.
+
+选项：
+Options:
+
+- A. $1,000 in cash
+- B. A 50% chance at winning $5,000
+- C. A 25% chance at winning $10,000
+- D. A 5% chance at winning $100,000
+
+答案：
+Answer:
+
+| 选择 | EMV | 风险偏好解释 |
+| --- | --- | --- |
+| A | 1000 | 最保守，risk-averse，因为确定拿钱 |
+| B | 2500 | 中等风险，接受一定不确定性 |
+| C | 2500 | 中等偏高风险，概率更低但收益更高 |
+| D | 5000 | 最高 EMV 但失败概率最大，risk-seeking |
+
+解析：如果只按 ==Expected Monetary Value / EMV==，D 最高；但真实决策还受个人风险偏好影响。
+Explanation: If judging only by ==EMV==, D is highest; however, real decisions also depend on the decision maker's risk tolerance.
+
+### L7-Q2 Risk Utility 选择活动：Vacation after Job Loss
+
+题目：你刚为“一生一次”的假期存够钱，但出发前三周失业了。你会怎么做？
+Question: You have just finished saving for a once-in-a-lifetime vacation. Three weeks before leaving, you lose your job. What would you do?
+
+选项：
+Options:
+
+- A. Cancel the vacation
+- B. Take a much more modest vacation
+- C. Go as scheduled, reasoning that you need the time to prepare for a job search
+- D. Extend your vacation, because this might be your last chance to go first-class
+
+答案：
+Answer:
+
+| 选择 | 风险偏好解释 |
+| --- | --- |
+| A | 最保守，risk-averse，优先保存现金和降低不确定性 |
+| B | 中等保守，降低成本但仍保留部分收益 |
+| C | 风险中性或略 risk-seeking，接受当前计划带来的财务风险 |
+| D | 最 risk-seeking，在坏消息后仍扩大支出和风险 |
+
+解析：这个题重点不是算数，而是理解 ==Risk Utility==：同一金钱结果对不同人主观价值不同，因此项目风险决策也不能只看 EMV。
+Explanation: The point is not calculation but ==Risk Utility==: the same monetary outcome has different subjective value for different people, so project risk decisions cannot rely on EMV alone.
+
+### L7-Q3 Decision Tree / EMV
 
 题目：如何用 Decision Tree 和 EMV 比较不确定决策？
 Question: How do you use Decision Tree and EMV to compare uncertain decisions?
@@ -466,7 +626,7 @@ Answer template:
 如果方案 A 有 60% 概率收益 100000，40% 概率损失 30000，则 EMV = 0.6×100000 + 0.4×(-30000) = ==48000==。
 If option A has a 60% chance of gaining 100000 and a 40% chance of losing 30000, EMV = 0.6×100000 + 0.4×(-30000) = ==48000==.
 
-### L7-Q2 Monte Carlo Simulation
+### L7-Q4 Monte Carlo Simulation
 
 题目：一个项目有 R&D、Prototype、Testing、Final Production Preparation 四个阶段，持续时间服从不同正态分布。用 Monte Carlo 估计 330 天内完成概率。说明过程。
 Question: A project has R&D, Prototype, Testing, and Final Production Preparation phases with normally distributed durations. Use Monte Carlo to estimate probability of completion within 330 days. Explain the process.
@@ -600,8 +760,16 @@ Different stakeholders have different payoffs: users want features, developers c
 题目：设备安装可以在设备基础完成 15 天后开始，这是什么依赖？
 Question: Equipment installation can start 15 days after equipment foundation is completed. What dependency is this?
 
+选项：
+Options:
+
+- A. Finish-to-start with a 15-day lead
+- B. Finish-to-start with a 15-day lag
+- C. Finish-to-finish with a 15-day lag
+- D. Start-to-finish with a 15-day lead
+
 答案：==Finish-to-start with a 15-day lag==。
-Answer: ==Finish-to-start with a 15-day lag==.
+Answer: ==B. Finish-to-start with a 15-day lag==.
 
 解释：基础完成后安装才能开始，是 FS；还要等 15 天，是 lag。
 Explanation: installation starts after foundation finishes, so it is FS; the 15-day wait is lag.
@@ -611,8 +779,16 @@ Explanation: installation starts after foundation finishes, so it is FS; the 15-
 题目：Sponsor 要求预测项目完工成本，最好用什么指标？
 Question: The sponsor asks for a forecast for cost at completion. What metric is best?
 
+选项：
+Options:
+
+- A. EV and AC
+- B. SV and VAC
+- C. EAC and VAC
+- D. SPI and CPI
+
 答案：==EAC and VAC==。
-Answer: ==EAC and VAC==.
+Answer: ==C. EAC and VAC==.
 
 解释：EAC 是完工估算，VAC 是完工偏差。
 Explanation: EAC estimates cost at completion, and VAC gives variance at completion.
@@ -622,8 +798,16 @@ Explanation: EAC estimates cost at completion, and VAC gives variance at complet
 题目：CPI = 0.89 表示什么？
 Question: What does CPI = 0.89 mean?
 
+选项：
+Options:
+
+- A. The progress of the project is only 89% of what it is planned, so you are behind the schedule
+- B. You are ahead of schedule
+- C. Your project is running according to the budget
+- D. Your project is getting 89 cents out of each dollar spent
+
 答案：==Your project is getting 89 cents out of each dollar spent==。
-Answer: ==Your project is getting 89 cents out of each dollar spent==.
+Answer: ==D. Your project is getting 89 cents out of each dollar spent==.
 
 解释：CPI = EV / AC，低于 1 表示成本效率差。
 Explanation: CPI = EV / AC; below 1 means poor cost efficiency.
@@ -633,16 +817,35 @@ Explanation: CPI = EV / AC; below 1 means poor cost efficiency.
 题目：项目经理根据三个相似项目经验估出 8-10 个月，用的是什么估算？
 Question: The project manager estimates 8-10 months based on three similar projects. What technique is used?
 
+选项：
+Options:
+
+- A. Expert judgement
+- B. Three-point estimating
+- C. Analogous estimating
+- D. Bottom-up estimating
+
 答案：==Analogous estimating==。
-Answer: ==Analogous estimating==.
+Answer: ==C. Analogous estimating==.
+
+解释：Analogous estimating 用历史相似项目进行粗略估算，常在早期信息不足时使用。
+Explanation: Analogous estimating uses similar past projects for rough estimates, often when early information is limited.
 
 ### L11-Q5 选择题：买保险应对风暴
 
 题目：Tom 为冬季风暴可能造成损害买保险，这是哪种风险应对？
 Question: Tom buys insurance against possible storm damage. What risk response is this?
 
+选项：
+Options:
+
+- A. Transfer
+- B. Avoid
+- C. Accept
+- D. Mitigate
+
 答案：==Transfer==。
-Answer: ==Transfer==.
+Answer: ==A. Transfer==.
 
 解释：保险把财务风险转移给第三方。
 Explanation: insurance transfers financial risk to a third party.
@@ -652,8 +855,16 @@ Explanation: insurance transfers financial risk to a third party.
 题目：哪个合同对供应商风险最低？
 Question: Which contract has the least risk for the supplier?
 
+选项：
+Options:
+
+- A. Time and materials
+- B. Cost plus award fee
+- C. Fixed price incentive fee
+- D. Cost plus percentage of costs
+
 答案：==Cost plus percentage of costs==。
-Answer: ==Cost plus percentage of costs==.
+Answer: ==D. Cost plus percentage of costs==.
 
 解释：成本越高卖方可获得越多，因此买方最不喜欢，供应商风险低。
 Explanation: higher cost can increase seller payment, so buyers dislike it most and supplier risk is low.
@@ -663,8 +874,16 @@ Explanation: higher cost can increase seller payment, so buyers dislike it most 
 题目：项目时间非常紧，网络图不能再改，但有额外人力，最好做什么？
 Question: The project is time-critical, the network diagram cannot be changed, but extra human resources are available. What is best?
 
+选项：
+Options:
+
+- A. Risk analysis
+- B. Leveling the resources
+- C. Crashing
+- D. Fast tracking
+
 答案：==Crashing==。
-Answer: ==Crashing==.
+Answer: ==C. Crashing==.
 
 解释：Crashing 是增加资源压缩关键路径工期；Fast tracking 是改并行关系，但题目说网络图不能改。
 Explanation: Crashing adds resources to shorten critical-path duration; Fast tracking changes parallel relationships, but the question says the network diagram cannot be changed.

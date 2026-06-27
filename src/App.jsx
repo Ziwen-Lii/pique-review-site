@@ -41,12 +41,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v9";
-const ACTIVE_KEY = "review-site-active-chapter-v9";
-const EXPANDED_KEY = "review-site-expanded-courses-v9";
+const STORAGE_KEY = "review-site-courses-v10";
+const ACTIVE_KEY = "review-site-active-chapter-v10";
+const EXPANDED_KEY = "review-site-expanded-courses-v10";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "test-exercises";
+const DEFAULT_CHAPTER_ID = "pm-exercises";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
