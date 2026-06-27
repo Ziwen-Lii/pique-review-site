@@ -603,6 +603,14 @@ a:focus-visible {
   content: "/";
 }
 
+.chapter-sync-status {
+  max-width: 760px;
+  margin: 14px 0 0;
+  color: #747982;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .reader-panel,
 .editor-panel {
   background: transparent;
@@ -1029,96 +1037,6 @@ a:focus-visible {
   color: #737980;
   font-size: 13px;
   line-height: 1.55;
-}
-
-.sync-panel {
-  display: grid;
-  gap: 18px;
-}
-
-.sync-section {
-  display: grid;
-  gap: 13px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
-  background: #fafafa;
-}
-
-.theme-dark .sync-section {
-  background: #15171b;
-}
-
-.sync-section h3 {
-  margin: 0;
-  color: var(--ink-strong);
-  font-size: 16px;
-}
-
-.sync-section label {
-  display: grid;
-  gap: 8px;
-  color: #555b61;
-  font-size: 14px;
-  font-weight: 760;
-}
-
-.sync-section input[type="password"],
-.sync-section textarea {
-  width: 100%;
-  border: 1px solid var(--line-strong);
-  border-radius: 8px;
-  color: var(--ink);
-  background: #fff;
-  font-size: 15px;
-}
-
-.theme-dark .sync-section input[type="password"],
-.theme-dark .sync-section textarea {
-  background: #191b1f;
-}
-
-.sync-section input[type="password"] {
-  height: 42px;
-  padding: 0 12px;
-}
-
-.sync-section textarea {
-  min-height: 120px;
-  resize: vertical;
-  padding: 12px;
-  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-  line-height: 1.58;
-}
-
-.check-row {
-  display: flex !important;
-  grid-template-columns: none !important;
-  align-items: center;
-  gap: 9px !important;
-}
-
-.check-row input {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--accent);
-}
-
-.sync-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-}
-
-.sync-status {
-  margin: 0;
-  border: 1px solid rgba(111, 85, 217, 0.16);
-  border-radius: 8px;
-  padding: 11px 12px;
-  color: var(--accent);
-  background: rgba(111, 85, 217, 0.06);
-  font-size: 13px;
-  line-height: 1.5;
 }
 
 .empty-state {
