@@ -21,6 +21,7 @@ import testLecture01Markdown from "./content/test-lecture-01.md?raw";
 import testLecture02Markdown from "./content/test-lecture-02.md?raw";
 import testLecture03Markdown from "./content/test-lecture-03.md?raw";
 import testLecture04Markdown from "./content/test-lecture-04.md?raw";
+import testExercisesCh04Markdown from "./content/test-exercises-ch04.md?raw";
 import testLecture05Markdown from "./content/test-lecture-05.md?raw";
 import testLecture06Markdown from "./content/test-lecture-06.md?raw";
 import testLecture07Markdown from "./content/test-lecture-07.md?raw";
@@ -39,12 +40,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v6";
-const ACTIVE_KEY = "review-site-active-chapter-v6";
-const EXPANDED_KEY = "review-site-expanded-courses-v6";
+const STORAGE_KEY = "review-site-courses-v7";
+const ACTIVE_KEY = "review-site-active-chapter-v7";
+const EXPANDED_KEY = "review-site-expanded-courses-v7";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "test-l01";
+const DEFAULT_CHAPTER_ID = "test-exercises-ch04";
 let mermaidRenderQueue = Promise.resolve();
 let mermaidRenderCount = 0;
 
@@ -227,6 +228,11 @@ const starterCourses = [
         id: "test-l04",
         title: "第4章：软件测试方法",
         markdown: testLecture04Markdown,
+      },
+      {
+        id: "test-exercises-ch04",
+        title: "第4章专项题库：软件测试方法",
+        markdown: testExercisesCh04Markdown,
       },
       {
         id: "test-l05",
