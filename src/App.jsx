@@ -27,6 +27,7 @@ import testLecture05Markdown from "./content/test-lecture-05.md?raw";
 import testLecture06Markdown from "./content/test-lecture-06.md?raw";
 import testLecture07Markdown from "./content/test-lecture-07.md?raw";
 import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
+import pmDrillBankMarkdown from "./content/pm-drill-bank.md?raw";
 import pmExercisesMarkdown from "./content/pm-exercises.md?raw";
 import pmFinalReviewMarkdown from "./content/pm-final-review.md?raw";
 import pmLecture01Markdown from "./content/pm-lecture-01.md?raw";
@@ -41,12 +42,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v10";
-const ACTIVE_KEY = "review-site-active-chapter-v10";
-const EXPANDED_KEY = "review-site-expanded-courses-v10";
+const STORAGE_KEY = "review-site-courses-v11";
+const ACTIVE_KEY = "review-site-active-chapter-v11";
+const EXPANDED_KEY = "review-site-expanded-courses-v11";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-exercises";
+const DEFAULT_CHAPTER_ID = "pm-drill-bank";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
@@ -273,6 +274,11 @@ const starterCourses = [
     id: "course-pm",
     title: "软件项目管理",
     chapters: [
+      {
+        id: "pm-drill-bank",
+        title: "刷题大章：选择题与简答题",
+        markdown: pmDrillBankMarkdown,
+      },
       {
         id: "pm-final-review",
         title: "最后总复习：框架与高频词",
