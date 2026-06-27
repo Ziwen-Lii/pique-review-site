@@ -17,6 +17,13 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import testLecture01Markdown from "./content/test-lecture-01.md?raw";
+import testLecture02Markdown from "./content/test-lecture-02.md?raw";
+import testLecture03Markdown from "./content/test-lecture-03.md?raw";
+import testLecture04Markdown from "./content/test-lecture-04.md?raw";
+import testLecture05Markdown from "./content/test-lecture-05.md?raw";
+import testLecture06Markdown from "./content/test-lecture-06.md?raw";
+import testLecture07Markdown from "./content/test-lecture-07.md?raw";
 import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
 import pmExercisesMarkdown from "./content/pm-exercises.md?raw";
 import pmFinalReviewMarkdown from "./content/pm-final-review.md?raw";
@@ -32,12 +39,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v5";
-const ACTIVE_KEY = "review-site-active-chapter-v5";
-const EXPANDED_KEY = "review-site-expanded-courses-v5";
+const STORAGE_KEY = "review-site-courses-v6";
+const ACTIVE_KEY = "review-site-active-chapter-v6";
+const EXPANDED_KEY = "review-site-expanded-courses-v6";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-final-review";
+const DEFAULT_CHAPTER_ID = "test-l01";
 let mermaidRenderQueue = Promise.resolve();
 let mermaidRenderCount = 0;
 
@@ -202,60 +209,39 @@ const starterCourses = [
     title: "软件测试",
     chapters: [
       {
-        id: "test-01",
-        title: "第一章：测试基础与质量模型",
-        markdown: `# 第一章：测试基础与质量模型
-
-## 复习重点
-
-- 软件测试的目标是发现缺陷、评估质量、降低风险。
-- 测试不能证明程序没有缺陷，只能提高信心。
-- 质量属性常见有可靠性、可用性、效率、可维护性、可移植性。
-
-## 高频判断
-
-- 调试不是测试。
-- 穷尽测试通常不现实。
-- 缺陷发现越早，修复成本越低。`,
+        id: "test-l01",
+        title: "第1章：引论",
+        markdown: testLecture01Markdown,
       },
       {
-        id: "test-02",
-        title: "第二章：黑盒测试方法",
-        markdown: `# 第二章：黑盒测试方法
-
-## 方法速记
-
-- **等价类划分**：把输入分成有效类和无效类。
-- **边界值分析**：重点测边界、刚好越界和临界值。
-- **判定表**：适合多条件组合。
-- **因果图**：把输入原因和输出结果关联起来。
-
-## 例题框架
-
-1. 找输入条件。
-2. 划分等价类。
-3. 选代表值。
-4. 补充边界值。
-5. 写测试用例表。`,
+        id: "test-l02",
+        title: "第2章：软件测试基本概念",
+        markdown: testLecture02Markdown,
       },
       {
-        id: "test-03",
-        title: "第三章：白盒测试与覆盖准则",
-        markdown: `# 第三章：白盒测试与覆盖准则
-
-## 覆盖强度
-
-语句覆盖 < 判定覆盖 < 条件覆盖 < 判定/条件覆盖 < 条件组合覆盖 < 路径覆盖
-
-## 重点
-
-- 语句覆盖要求每条语句至少执行一次。
-- 判定覆盖要求每个判定的真假分支都至少执行一次。
-- 路径覆盖最强，但复杂程序路径数量可能爆炸。
-
-## 易错点
-
-达到条件覆盖不一定达到判定覆盖，具体要看条件组合是否让判定结果发生变化。`,
+        id: "test-l03",
+        title: "第3章：软件测试流程和规范",
+        markdown: testLecture03Markdown,
+      },
+      {
+        id: "test-l04",
+        title: "第4章：软件测试方法",
+        markdown: testLecture04Markdown,
+      },
+      {
+        id: "test-l05",
+        title: "第5章：单元测试与集成测试",
+        markdown: testLecture05Markdown,
+      },
+      {
+        id: "test-l06",
+        title: "第6章：系统测试",
+        markdown: testLecture06Markdown,
+      },
+      {
+        id: "test-l07",
+        title: "第7章：专项测试",
+        markdown: testLecture07Markdown,
       },
     ],
   },
