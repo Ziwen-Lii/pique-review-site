@@ -57,6 +57,7 @@ const CLOUD_API_URL = "https://api.github.com/repos/Ziwen-Lii/pique-review-site/
 const CLOUD_TOKEN_KEY = "review-site-cloud-token-v1";
 const CLOUD_ENABLED_KEY = "review-site-cloud-enabled-v1";
 const CLOUD_PUBLISH_DELAY = 1400;
+const CLOUD_POLL_INTERVAL = 12000;
 const EXPORT_VERSION = 1;
 let mermaidRenderQueue = Promise.resolve();
 let mermaidRenderCount = 0;
@@ -522,12 +523,24 @@ function createCloudPayload(courses) {
 }
 
 function parseCoursePayload(raw) {
+  return parseCloudPayload(raw).courses;
+}
+
+function parseCloudPayload(raw) {
   try {
     const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
     const courses = Array.isArray(parsed) ? parsed : parsed?.courses;
-    return isCourseList(courses) ? courses : [];
+    return {
+      version: Number(parsed?.version) || EXPORT_VERSION,
+      updatedAt: typeof parsed?.updatedAt === "string" ? parsed.updatedAt : null,
+      courses: isCourseList(courses) ? courses : [],
+    };
   } catch {
-    return [];
+    return {
+      version: EXPORT_VERSION,
+      updatedAt: null,
+      courses: [],
+    };
   }
 }
 
@@ -540,15 +553,25 @@ function encodeBase64Utf8(text) {
   return btoa(binary);
 }
 
-async function fetchCloudCourses() {
+async function fetchCloudData() {
   const response = await fetch(`${CLOUD_CONTENT_URL}?t=${Date.now()}`, {
     cache: "no-store",
   });
   if (!response.ok) {
-    if (response.status === 404) return [];
+    if (response.status === 404) {
+      return {
+        version: EXPORT_VERSION,
+        updatedAt: null,
+        courses: [],
+      };
+    }
     throw new Error(`云端读取失败：${response.status}`);
   }
-  return parseCoursePayload(await response.text());
+  return parseCloudPayload(await response.text());
+}
+
+async function fetchCloudCourses() {
+  return (await fetchCloudData()).courses;
 }
 
 async function publishCloudCourses(courses, token) {
@@ -1050,7 +1073,7 @@ function AddDrawer({ courses, activeCourseId, open, onClose, onAddCourse, onAddC
     if (type === "course") {
       const title = courseTitle.trim();
       if (!title) return;
-      onAddCourse(title);
+      if (onAddCourse(title) === false) return;
       setCourseTitle("");
       onClose();
       return;
@@ -1058,10 +1081,14 @@ function AddDrawer({ courses, activeCourseId, open, onClose, onAddCourse, onAddC
 
     const title = chapterTitle.trim();
     if (!title || !selectedCourse) return;
-    onAddChapter(selectedCourse.id, {
-      title,
-      markdown: chapterMarkdown.trim() || templateFor(title, selectedCourse.title),
-    });
+    if (
+      onAddChapter(selectedCourse.id, {
+        title,
+        markdown: chapterMarkdown.trim() || templateFor(title, selectedCourse.title),
+      }) === false
+    ) {
+      return;
+    }
     setChapterTitle("");
     setChapterMarkdown("");
     onClose();
@@ -1091,7 +1118,7 @@ function AddDrawer({ courses, activeCourseId, open, onClose, onAddCourse, onAddC
             课程
           </button>
         </div>
-        <p className="form-note">未开启 GitHub 云同步时，新资料只保存在当前浏览器。</p>
+        <p className="form-note">新增资料会写入云端；如果还没配置同步，会先打开同步设置，避免只存在本机。</p>
 
         <form className="drawer-form" onSubmit={submit}>
           {type === "chapter" ? (
@@ -1144,7 +1171,7 @@ function AddDrawer({ courses, activeCourseId, open, onClose, onAddCourse, onAddC
 
           <button className="primary-button" type="submit">
             <Plus size={17} />
-            添加{type === "chapter" ? "章节" : "课程"}
+            添加并同步{type === "chapter" ? "章节" : "课程"}
           </button>
         </form>
       </aside>
@@ -1225,7 +1252,7 @@ function SyncDrawer({
         <div className="sync-panel">
           <section className="sync-section">
             <h3>GitHub 云同步</h3>
-            <p className="form-note">电脑配置写入令牌后，新增/编辑/删除自建章节会发布到 GitHub；手机刷新页面会读取云端资料。</p>
+            <p className="form-note">配置写入令牌后，点 + 新增、编辑或删除自建章节都会自动发布到 GitHub；其他设备会定时读取云端资料。</p>
 
             <label className="check-row">
               <input checked={enabledDraft} onChange={(event) => setEnabledDraft(event.target.checked)} type="checkbox" />
@@ -1250,7 +1277,7 @@ function SyncDrawer({
                 type="button"
               >
                 <Upload size={17} />
-                保存设置
+                保存并发布
               </button>
               <button className="secondary-button" disabled={syncBusy} onClick={onPullCloud} type="button">
                 <Download size={17} />
@@ -1358,12 +1385,25 @@ export function App() {
   const outline = useMemo(() => extractHeadings(visibleMarkdown), [visibleMarkdown]);
   const totalChapters = courses.reduce((sum, course) => sum + course.chapters.length, 0);
 
-  function mergeImportedCourses(importedCourses) {
-    if (!importedCourses.length) return courses;
-    const nextCourses = mergeCustomCourses(courses, importedCourses);
+  function applyCloudData(cloudData, { silent = false } = {}) {
+    const hasCloudSource = Boolean(cloudData.updatedAt) || cloudData.courses.length > 0;
+    if (!hasCloudSource) return false;
+
+    const nextCourses = mergeCustomCourses(starterCourses, cloudData.courses);
     setCourses(nextCourses);
-    setExpanded((current) => new Set([...current, ...importedCourses.map((course) => course.id)]));
-    return nextCourses;
+    setExpanded((current) => new Set([...current, ...getAllCourseIds(nextCourses)]));
+    if (!silent) {
+      setSyncStatus(cloudData.courses.length ? "已读取云端资料。" : "云端自建章节为空，本机已同步清理。");
+    }
+    return true;
+  }
+
+  function ensureCloudWrite() {
+    if (cloudEnabled && cloudToken.trim()) return true;
+    setSyncStatus("要实现全设备同步，需要先在“同步资料”里保存 GitHub token 并开启自动发布。");
+    setDrawerOpen(false);
+    setSyncDrawerOpen(true);
+    return false;
   }
 
   async function publishNow(targetCourses = courses, token = cloudToken) {
@@ -1380,7 +1420,10 @@ export function App() {
   }
 
   function scheduleCloudPublish(nextCourses) {
-    if (!cloudEnabled || !cloudToken.trim()) return;
+    if (!cloudEnabled || !cloudToken.trim()) {
+      setSyncStatus("本机已保存，但未发布：请先配置 GitHub 云同步。");
+      return;
+    }
     window.clearTimeout(publishTimerRef.current);
     setSyncStatus("本机已保存，准备自动发布到 GitHub...");
     publishTimerRef.current = window.setTimeout(() => {
@@ -1392,13 +1435,8 @@ export function App() {
     setSyncBusy(true);
     setSyncStatus("正在读取云端资料...");
     try {
-      const cloudCourses = await fetchCloudCourses();
-      if (!cloudCourses.length) {
-        setSyncStatus("云端暂无自建章节。");
-        return;
-      }
-      mergeImportedCourses(cloudCourses);
-      setSyncStatus("已读取云端资料。");
+      const cloudData = await fetchCloudData();
+      if (!applyCloudData(cloudData)) setSyncStatus("云端暂无自建章节。");
     } catch (error) {
       setSyncStatus(error.message);
     } finally {
@@ -1418,6 +1456,9 @@ export function App() {
     setCloudToken(cleanToken);
     setCloudEnabled(nextEnabled);
     setSyncStatus(nextEnabled ? "GitHub 自动发布已开启。" : "GitHub 自动发布未开启。");
+    if (nextEnabled) {
+      publishNow(courses, cleanToken);
+    }
   }
 
   function importCourses(importedCourses) {
@@ -1457,21 +1498,28 @@ export function App() {
   useEffect(() => {
     let cancelled = false;
 
-    fetchCloudCourses()
-      .then((cloudCourses) => {
-        if (cancelled || !cloudCourses.length) return;
-        setCourses((current) => mergeCustomCourses(current, cloudCourses));
-        setExpanded((current) => new Set([...current, ...cloudCourses.map((course) => course.id)]));
-        setSyncStatus("已自动读取云端自建资料。");
-      })
-      .catch((error) => {
-        if (!cancelled) {
-          setSyncStatus(error.message);
-        }
-      });
+    const syncFromCloud = (silent = false) => {
+      fetchCloudData()
+        .then((cloudData) => {
+          if (cancelled) return;
+          const changed = applyCloudData(cloudData, { silent });
+          if (changed && !silent) {
+            setSyncStatus(cloudData.courses.length ? "已自动读取云端自建资料。" : "云端自建章节为空，本机已同步清理。");
+          }
+        })
+        .catch((error) => {
+          if (!cancelled && !silent) {
+            setSyncStatus(error.message);
+          }
+        });
+    };
+
+    syncFromCloud(false);
+    const pollTimer = window.setInterval(() => syncFromCloud(true), CLOUD_POLL_INTERVAL);
 
     return () => {
       cancelled = true;
+      window.clearInterval(pollTimer);
       window.clearTimeout(publishTimerRef.current);
     };
   }, []);
@@ -1513,6 +1561,7 @@ export function App() {
   };
 
   const addCourse = (title) => {
+    if (!ensureCloudWrite()) return false;
     const courseId = createId("course");
     const chapterId = createId("chapter");
     const newCourse = {
@@ -1535,9 +1584,11 @@ export function App() {
     setExpanded((current) => new Set([...current, courseId]));
     setActiveChapterId(chapterId);
     setMode("preview");
+    return true;
   };
 
   const addChapter = (courseId, chapter) => {
+    if (!ensureCloudWrite()) return false;
     const chapterId = createId("chapter");
     setCourses((current) => {
       const nextCourses = current.map((course) =>
@@ -1554,10 +1605,12 @@ export function App() {
     setExpanded((current) => new Set([...current, courseId]));
     setActiveChapterId(chapterId);
     setMode("preview");
+    return true;
   };
 
   const deleteActiveChapter = () => {
     if (!active || totalChapters <= 1) return;
+    if (!ensureCloudWrite()) return;
     const nextCourses = courses.map((course) =>
       course.id === active.course.id
         ? {

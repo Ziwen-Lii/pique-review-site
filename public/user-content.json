@@ -1,17 +1,5 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-27T09:37:04Z",
-  "courses": [
-    {
-      "id": "course-sad",
-      "title": "系统分析与设计",
-      "chapters": [
-        {
-          "id": "chapter-mqw5nd51-th3sh",
-          "title": "总复习",
-          "markdown": "11"
-        }
-      ]
-    }
-  ]
+  "updatedAt": "2026-06-27T09:41:09Z",
+  "courses": []
 }
