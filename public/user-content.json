@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-27T10:08:13.217Z",
+  "updatedAt": "2026-06-27T10:10:54.156Z",
   "courses": [
     {
       "id": "course-mqw75ojd-ar8i2",
@@ -10,6 +10,11 @@
           "id": "chapter-mqw75ojd-q5gmf",
           "title": "第一章：复习提纲",
           "markdown": "# 第一章：复习提纲\n\n## 复习重点\n\n- \n- \n- \n\n## 高频考点\n\n1. \n2. \n3. \n\n## 易错提醒\n\n> 欧阳欣怡 这一节最容易丢分的地方是：\n\n## 自测\n\n- \n- \n- "
+        },
+        {
+          "id": "chapter-mqw794r3-uy3ex",
+          "title": "李梓闻",
+          "markdown": "李梓闻是欧阳欣怡的老公"
         }
       ]
     }
