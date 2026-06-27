@@ -21,6 +21,7 @@ import testLecture01Markdown from "./content/test-lecture-01.md?raw";
 import testLecture02Markdown from "./content/test-lecture-02.md?raw";
 import testLecture03Markdown from "./content/test-lecture-03.md?raw";
 import testLecture04Markdown from "./content/test-lecture-04.md?raw";
+import testExercisesMarkdown from "./content/test-exercises.md?raw";
 import testExercisesCh04Markdown from "./content/test-exercises-ch04.md?raw";
 import testLecture05Markdown from "./content/test-lecture-05.md?raw";
 import testLecture06Markdown from "./content/test-lecture-06.md?raw";
@@ -40,12 +41,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v8";
-const ACTIVE_KEY = "review-site-active-chapter-v8";
-const EXPANDED_KEY = "review-site-expanded-courses-v8";
+const STORAGE_KEY = "review-site-courses-v9";
+const ACTIVE_KEY = "review-site-active-chapter-v9";
+const EXPANDED_KEY = "review-site-expanded-courses-v9";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "test-exercises-ch04";
+const DEFAULT_CHAPTER_ID = "test-exercises";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
@@ -221,6 +222,11 @@ const starterCourses = [
     id: "course-test",
     title: "软件测试",
     chapters: [
+      {
+        id: "test-exercises",
+        title: "软件测试总题库：选择题与答案",
+        markdown: testExercisesMarkdown,
+      },
       {
         id: "test-l01",
         title: "第1章：引论",
