@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
 import pmExercisesMarkdown from "./content/pm-exercises.md?raw";
+import pmFinalReviewMarkdown from "./content/pm-final-review.md?raw";
 import pmLecture01Markdown from "./content/pm-lecture-01.md?raw";
 import pmLecture02Markdown from "./content/pm-lecture-02.md?raw";
 import pmLecture03Markdown from "./content/pm-lecture-03.md?raw";
@@ -31,12 +32,14 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v4";
-const ACTIVE_KEY = "review-site-active-chapter-v4";
-const EXPANDED_KEY = "review-site-expanded-courses-v4";
+const STORAGE_KEY = "review-site-courses-v5";
+const ACTIVE_KEY = "review-site-active-chapter-v5";
+const EXPANDED_KEY = "review-site-expanded-courses-v5";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-exercises";
+const DEFAULT_CHAPTER_ID = "pm-final-review";
+let mermaidRenderQueue = Promise.resolve();
+let mermaidRenderCount = 0;
 
 const starterCourses = [
   {
@@ -260,6 +263,11 @@ const starterCourses = [
     id: "course-pm",
     title: "软件项目管理",
     chapters: [
+      {
+        id: "pm-final-review",
+        title: "最后总复习：框架与高频词",
+        markdown: pmFinalReviewMarkdown,
+      },
       {
         id: "pm-exercises",
         title: "课后题与样题：过程与答案",
@@ -528,41 +536,54 @@ function stripLeadingH1(markdown) {
   return markdown;
 }
 
+function renderMermaidChart(chart, theme) {
+  const renderId = `mermaid-${Date.now().toString(36)}-${mermaidRenderCount++}`;
+  const task = mermaidRenderQueue
+    .catch(() => undefined)
+    .then(async () => {
+      const { default: mermaid } = await import("mermaid");
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: "strict",
+        theme: theme === "dark" ? "dark" : "base",
+        themeVariables:
+          theme === "dark"
+            ? {
+                primaryColor: "#26213b",
+                primaryTextColor: "#f6f6f7",
+                primaryBorderColor: "#6f55d9",
+                lineColor: "#8f7ef2",
+                secondaryColor: "#191b1f",
+                tertiaryColor: "#101113",
+              }
+            : {
+                primaryColor: "#f6f3ff",
+                primaryTextColor: "#202326",
+                primaryBorderColor: "#b8abf4",
+                lineColor: "#6f55d9",
+                secondaryColor: "#ffffff",
+                tertiaryColor: "#f7f7f8",
+              },
+      });
+
+      return mermaid.render(renderId, chart);
+    });
+
+  mermaidRenderQueue = task.catch(() => undefined);
+  return task;
+}
+
 function MermaidDiagram({ chart, theme }) {
   const containerRef = useRef(null);
-  const idRef = useRef(`mermaid-${Math.random().toString(36).slice(2)}`);
 
   useEffect(() => {
     let active = true;
 
-    import("mermaid")
-      .then(({ default: mermaid }) => {
-        mermaid.initialize({
-          startOnLoad: false,
-          securityLevel: "strict",
-          theme: theme === "dark" ? "dark" : "base",
-          themeVariables:
-            theme === "dark"
-              ? {
-                  primaryColor: "#26213b",
-                  primaryTextColor: "#f6f6f7",
-                  primaryBorderColor: "#6f55d9",
-                  lineColor: "#8f7ef2",
-                  secondaryColor: "#191b1f",
-                  tertiaryColor: "#101113",
-                }
-              : {
-                  primaryColor: "#f6f3ff",
-                  primaryTextColor: "#202326",
-                  primaryBorderColor: "#b8abf4",
-                  lineColor: "#6f55d9",
-                  secondaryColor: "#ffffff",
-                  tertiaryColor: "#f7f7f8",
-                },
-        });
+    if (containerRef.current) {
+      containerRef.current.replaceChildren();
+    }
 
-        return mermaid.render(idRef.current, chart);
-      })
+    renderMermaidChart(chart, theme)
       .then(({ svg }) => {
         if (active && containerRef.current) {
           containerRef.current.innerHTML = svg;
