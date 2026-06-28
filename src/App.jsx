@@ -30,6 +30,7 @@ import pmDrawingMarkdown from "./content/pm-drawing.md?raw";
 import pmDrillBankMarkdown from "./content/pm-drill-bank.md?raw";
 import pmExercisesMarkdown from "./content/pm-exercises.md?raw";
 import pmFinalReviewMarkdown from "./content/pm-final-review.md?raw";
+import pmMockExamsMarkdown from "./content/pm-mock-exams.md?raw";
 import pmLecture01Markdown from "./content/pm-lecture-01.md?raw";
 import pmLecture02Markdown from "./content/pm-lecture-02.md?raw";
 import pmLecture03Markdown from "./content/pm-lecture-03.md?raw";
@@ -42,12 +43,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v11";
-const ACTIVE_KEY = "review-site-active-chapter-v11";
-const EXPANDED_KEY = "review-site-expanded-courses-v11";
+const STORAGE_KEY = "review-site-courses-v12";
+const ACTIVE_KEY = "review-site-active-chapter-v12";
+const EXPANDED_KEY = "review-site-expanded-courses-v12";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-drill-bank";
+const DEFAULT_CHAPTER_ID = "pm-mock-exams";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
@@ -274,6 +275,11 @@ const starterCourses = [
     id: "course-pm",
     title: "软件项目管理",
     chapters: [
+      {
+        id: "pm-mock-exams",
+        title: "三套模拟试卷：翻面答案版",
+        markdown: pmMockExamsMarkdown,
+      },
       {
         id: "pm-drill-bank",
         title: "刷题大章：选择题与简答题",
@@ -632,6 +638,7 @@ function isBlockStart(line) {
     /^\d+\.\s+/.test(trimmed) ||
     isTableStart(trimmed, "") ||
     trimmed.startsWith("> ") ||
+    trimmed.startsWith(":::answer") ||
     trimmed.startsWith("```")
   );
 }
@@ -810,6 +817,37 @@ function MermaidDiagram({ chart, theme }) {
   return <div className="diagram-panel" ref={containerRef} />;
 }
 
+function AnswerFlip({ children, title }) {
+  const [open, setOpen] = useState(false);
+  const label = title || "答案与解析 / Answer & Explanation";
+
+  return (
+    <section className={`answer-flip ${open ? "open" : ""}`}>
+      <button
+        className="answer-flip-toggle"
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((current) => !current)}
+      >
+        <span>{open ? "收起答案 / Hide answer" : "点击翻开答案 / Flip answer"}</span>
+        <Eye size={16} />
+      </button>
+      <div className="answer-flip-stage" aria-hidden={!open}>
+        <div className="answer-flip-card">
+          <div className="answer-flip-face answer-flip-front">
+            <span>答案隐藏中，先自己做一遍。</span>
+            <span>Answer hidden. Try it first.</span>
+          </div>
+          <div className="answer-flip-face answer-flip-back">
+            <p className="answer-flip-label">{label}</p>
+            <div className="answer-flip-content">{children}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function renderMarkdown(markdown, theme, onChapterLink) {
   const lines = markdown.split("\n");
   const blocks = [];
@@ -821,6 +859,23 @@ function renderMarkdown(markdown, theme, onChapterLink) {
 
     if (!trimmed) {
       index += 1;
+      continue;
+    }
+
+    if (trimmed.startsWith(":::answer")) {
+      const title = trimmed.replace(/^:::answer\s*/, "").trim();
+      const answerLines = [];
+      index += 1;
+      while (index < lines.length && lines[index].trim() !== ":::") {
+        answerLines.push(lines[index]);
+        index += 1;
+      }
+      index += 1;
+      blocks.push(
+        <AnswerFlip key={`answer-${index}`} title={title}>
+          {renderMarkdown(answerLines.join("\n"), theme, onChapterLink)}
+        </AnswerFlip>,
+      );
       continue;
     }
 
@@ -1171,7 +1226,7 @@ function readVersionedString(currentKey, pattern) {
 }
 
 function readInitialActiveChapterId(courses) {
-  const saved = readVersionedString(ACTIVE_KEY, ACTIVE_STORAGE_PATTERN);
+  const saved = localStorage.getItem(ACTIVE_KEY);
   return saved && findChapter(courses, saved) ? saved : getDefaultChapterId(courses);
 }
 

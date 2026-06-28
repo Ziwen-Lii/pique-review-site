@@ -756,6 +756,129 @@ a:focus-visible {
   height: auto;
 }
 
+.answer-flip {
+  margin: 18px 0 28px;
+}
+
+.answer-flip-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  border: 1px solid rgba(111, 85, 217, 0.24);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-size: calc(var(--reader-size) - 3px);
+  font-weight: 820;
+  letter-spacing: 0;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.answer-flip-toggle:hover {
+  border-color: rgba(111, 85, 217, 0.52);
+  background: #ebe6ff;
+}
+
+.answer-flip-toggle:active {
+  transform: scale(0.98);
+}
+
+.answer-flip-stage {
+  display: grid;
+  min-height: 78px;
+  margin-top: 10px;
+  perspective: 1100px;
+}
+
+.answer-flip-card {
+  position: relative;
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(0.2, 0.78, 0.18, 1);
+}
+
+.answer-flip.open .answer-flip-card {
+  transform: rotateX(180deg);
+}
+
+.answer-flip-face {
+  grid-area: 1 / 1;
+  min-height: 78px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 16px 18px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.answer-flip-front {
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  color: #777d84;
+  background:
+    linear-gradient(135deg, rgba(111, 85, 217, 0.06), rgba(111, 85, 217, 0)),
+    #fbfbfc;
+  font-size: calc(var(--reader-size) - 2px);
+  font-weight: 720;
+}
+
+.answer-flip-back {
+  transform: rotateX(180deg);
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(111, 85, 217, 0.075), rgba(111, 85, 217, 0)),
+    #fff;
+}
+
+.answer-flip-label {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: calc(var(--reader-size) - 3px);
+  font-weight: 860;
+  line-height: 1.3;
+}
+
+.answer-flip-content > :first-child {
+  margin-top: 0;
+}
+
+.answer-flip-content > :last-child {
+  margin-bottom: 0;
+}
+
+.answer-flip-content p,
+.answer-flip-content ul,
+.answer-flip-content ol {
+  font-size: calc(var(--reader-size) - 1px);
+}
+
+.theme-dark .answer-flip-toggle {
+  background: #26213b;
+}
+
+.theme-dark .answer-flip-toggle:hover {
+  background: #30274b;
+}
+
+.theme-dark .answer-flip-front {
+  background:
+    linear-gradient(135deg, rgba(111, 85, 217, 0.16), rgba(111, 85, 217, 0)),
+    #17191d;
+  color: #a9adb5;
+}
+
+.theme-dark .answer-flip-back {
+  background:
+    linear-gradient(180deg, rgba(111, 85, 217, 0.16), rgba(111, 85, 217, 0)),
+    #191b1f;
+}
+
 .theme-dark .diagram-panel {
   background:
     linear-gradient(180deg, rgba(111, 85, 217, 0.16), rgba(111, 85, 217, 0)),
