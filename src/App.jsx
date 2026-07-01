@@ -17,6 +17,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import testBigQuestionsMarkdown from "./content/test-big-questions.md?raw";
+import testFinalReviewMarkdown from "./content/test-final-review.md?raw";
 import testLecture01Markdown from "./content/test-lecture-01.md?raw";
 import testLecture02Markdown from "./content/test-lecture-02.md?raw";
 import testLecture03Markdown from "./content/test-lecture-03.md?raw";
@@ -43,12 +45,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v12";
-const ACTIVE_KEY = "review-site-active-chapter-v12";
-const EXPANDED_KEY = "review-site-expanded-courses-v12";
+const STORAGE_KEY = "review-site-courses-v13";
+const ACTIVE_KEY = "review-site-active-chapter-v13";
+const EXPANDED_KEY = "review-site-expanded-courses-v13";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "pm-mock-exams";
+const DEFAULT_CHAPTER_ID = "test-final-review";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
@@ -224,6 +226,16 @@ const starterCourses = [
     id: "course-test",
     title: "软件测试",
     chapters: [
+      {
+        id: "test-final-review",
+        title: "软件测试总复习：全课程框架与层级",
+        markdown: testFinalReviewMarkdown,
+      },
+      {
+        id: "test-big-questions",
+        title: "软件测试大题专项：问答、画图、画表",
+        markdown: testBigQuestionsMarkdown,
+      },
       {
         id: "test-exercises",
         title: "软件测试总题库：选择题与答案",
