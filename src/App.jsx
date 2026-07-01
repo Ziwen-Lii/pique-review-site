@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import testBigQuestionsMarkdown from "./content/test-big-questions.md?raw";
 import testFinalReviewMarkdown from "./content/test-final-review.md?raw";
+import testHomeworkSolutionsMarkdown from "./content/test-homework-solutions.md?raw";
 import testLecture01Markdown from "./content/test-lecture-01.md?raw";
 import testLecture02Markdown from "./content/test-lecture-02.md?raw";
 import testLecture03Markdown from "./content/test-lecture-03.md?raw";
@@ -45,12 +46,12 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v13";
-const ACTIVE_KEY = "review-site-active-chapter-v13";
-const EXPANDED_KEY = "review-site-expanded-courses-v13";
+const STORAGE_KEY = "review-site-courses-v14";
+const ACTIVE_KEY = "review-site-active-chapter-v14";
+const EXPANDED_KEY = "review-site-expanded-courses-v14";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
-const DEFAULT_CHAPTER_ID = "test-final-review";
+const DEFAULT_CHAPTER_ID = "test-homework-solutions";
 const COURSE_STORAGE_PATTERN = /^review-site-courses-v(\d+)$/;
 const ACTIVE_STORAGE_PATTERN = /^review-site-active-chapter-v(\d+)$/;
 const EXPANDED_STORAGE_PATTERN = /^review-site-expanded-courses-v(\d+)$/;
@@ -226,6 +227,11 @@ const starterCourses = [
     id: "course-test",
     title: "软件测试",
     chapters: [
+      {
+        id: "test-homework-solutions",
+        title: "软件测试作业题详解：6道核心作业",
+        markdown: testHomeworkSolutionsMarkdown,
+      },
       {
         id: "test-final-review",
         title: "软件测试总复习：全课程框架与层级",
