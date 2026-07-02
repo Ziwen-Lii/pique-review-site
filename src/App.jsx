@@ -46,9 +46,9 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v15";
-const ACTIVE_KEY = "review-site-active-chapter-v15";
-const EXPANDED_KEY = "review-site-expanded-courses-v15";
+const STORAGE_KEY = "review-site-courses-v16";
+const ACTIVE_KEY = "review-site-active-chapter-v16";
+const EXPANDED_KEY = "review-site-expanded-courses-v16";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
 const DEFAULT_CHAPTER_ID = "test-homework-solutions";
