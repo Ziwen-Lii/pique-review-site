@@ -46,9 +46,9 @@ import pmLecture09Markdown from "./content/pm-lecture-09.md?raw";
 import pmLecture10Markdown from "./content/pm-lecture-10.md?raw";
 import pmLecture11Markdown from "./content/pm-lecture-11.md?raw";
 
-const STORAGE_KEY = "review-site-courses-v16";
-const ACTIVE_KEY = "review-site-active-chapter-v16";
-const EXPANDED_KEY = "review-site-expanded-courses-v16";
+const STORAGE_KEY = "review-site-courses-v17";
+const ACTIVE_KEY = "review-site-active-chapter-v17";
+const EXPANDED_KEY = "review-site-expanded-courses-v17";
 const READER_SIZE_KEY = "review-site-reader-size-v1";
 const THEME_KEY = "review-site-theme-v1";
 const DEFAULT_CHAPTER_ID = "test-homework-solutions";
@@ -229,7 +229,7 @@ const starterCourses = [
     chapters: [
       {
         id: "test-homework-solutions",
-        title: "软件测试作业题详解：6道核心作业",
+        title: "软件测试作业题详解：核心作业与白盒覆盖",
         markdown: testHomeworkSolutionsMarkdown,
       },
       {
